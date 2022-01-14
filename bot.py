@@ -29,7 +29,7 @@ bot = lightbulb.BotApp(
 bot.load_extensions_from("./extensions/", must_exist=True)
 
 @bot.command
-@lightbulb.command("ping", description="The bot's ping")
+@lightbulb.command("ping", description="Veja se o Bot está vivo")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def ping(ctx: lightbulb.Context) -> None:
     await ctx.respond(f"Pong! Latency: {bot.heartbeat_latency*1000:.2f}ms")

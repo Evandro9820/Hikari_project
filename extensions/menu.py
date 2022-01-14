@@ -1,4 +1,5 @@
 from datetime import datetime
+from sys import prefix
 
 import hikari
 import lightbulb
@@ -6,7 +7,7 @@ import lightbulb
 menu_plugin= lightbulb.Plugin("Menu")
 
 @menu_plugin.command()
-@lightbulb.command("menu",description="Uma menu para ajudar as pessoas sobre algumas coisas do Bot")
+@lightbulb.command("menu",description="Um menu para ajudar as pessoas sobre algumas coisas do Bot")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand) 
 async def menu(ctx: lightbulb.Context)-> None:
     menu = hikari.Embed(
@@ -15,7 +16,7 @@ async def menu(ctx: lightbulb.Context)-> None:
         
     )
     menu.add_field(
-        name="#roll", value="Use ele para rolar dados. Ex: 1d20", inline=False
+        name=f"{prefix}roll", value="Use ele para rolar dados. Ex: 1d20", inline=False
     )
     menu.add_field(
         name="#menu", value="Use ele para acessar esse menu aqui", inline=True
