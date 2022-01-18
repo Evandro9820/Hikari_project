@@ -28,6 +28,7 @@ bot = lightbulb.BotApp(
 
 bot.load_extensions_from("./extensions/", must_exist=True)
 
+
 @bot.command
 @lightbulb.command("ping", description="Veja se o Bot está vivo e a latência dele")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)

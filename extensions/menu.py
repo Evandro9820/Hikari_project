@@ -21,12 +21,12 @@ async def menu(ctx: lightbulb.Context)-> None:
         name="+menu", value="Use ele para acessar esse menu aqui", inline=True
     )
     menu.add_field(
-        name="#sistemas",
+        name="+sistemas",
         value="Use ele para obter links de sistemas",
         inline=True,
     )
     menu.add_field(
-        name="#fichas",
+        name="+fichas",
         value="Use ele para obter links de fichas editaveis em PDF",
         inline=True,
     )
