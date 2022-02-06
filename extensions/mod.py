@@ -1,5 +1,4 @@
 import asyncio
-from binhex import REASONABLY_LARGE
 import datetime
 from typing_extensions import Required
 import hikari

@@ -15,7 +15,7 @@ nsfw_plugin = lightbulb.Plugin("nfsw")
 @lightbulb.implements(lightbulb.commands.SlashCommand)
 async def cmd_rule34(ctx: lightbulb.context.SlashContext) -> None:
     async with aiohttp.request(
-        "GEt",
+        "GET",
         "https://api.rule34.xxx/index.php",
         params={
             "page": "dapi",
