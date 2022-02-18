@@ -38,22 +38,6 @@ async def ficha_cmd(ctx: lightbulb.Context) -> None:
     await menu.run(resp)
 
 
-# D&D - https://is.gd/sistemaded
-# 2D6 - https://is.gd/Sistema2d6
-# class Menu2(neon.ComponentMenu):
-#     @neon.button("sysD&D", "sysd&d", hikari.ButtonStyle.PRIMARY, emoji="📘")
-#     async def sys_cmd(self, button: neon.Button) -> None:
-#         await self.edit_msg("https://is.gd/sistemaded")
-
-
-# @rpg_plugin.command()
-# @lightbulb.command("sys_rpg","Use para ter acesso ao links para os sitemas de rpg")
-# @lightbulb.implements(lightbulb.SlashCommand)
-# async def syst_cmd(ctx: lightbulb.SlashContext) -> None:
-#     menu2 = Menu(ctx, timeout=30)
-#     resp2 = ctx.respond('Escolha um sistema', components=menu2.build())
-#     await menu2.run(resp2)
-# Carrega as extensões
 def load(bot):
     bot.add_plugin(rpg_plugin)
 

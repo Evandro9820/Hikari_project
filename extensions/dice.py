@@ -43,5 +43,7 @@ async def dice(ctx: lightbulb.Context) -> None:
 
 def load(bot):
     bot.add_plugin(dice_plugin)
+
+
 def unload(bot):
     bot.remove_plugin(dice_plugin)

@@ -43,28 +43,32 @@ async def cmd_ban(ctx: lightbulb.context.SlashContext) -> None:
     )
  """
 
-@mod_plugin.command
-@lightbulb.option(
-    "messages", "The number of messages to purge.", type=int, required=True
-)
-@lightbulb.command("purge", "Purge messages.", aliases=["clear"])
-@lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
-async def purge_messages(ctx: lightbulb.Context) -> None:
-    num_msgs = ctx.options.messages
-    channel = ctx.channel_id
+# Este comando está com problemas
 
-    # If the command was invoked using the PrefixCommand, it will create a message
-    # before we purge the messages, so you want to delete this message first
-    if isinstance(ctx, lightbulb.PrefixContext):
-        await ctx.event.message.delete()
+# @mod_plugin.command
+# @lightbulb.option(
+#     "messages", "The number of messages to purge.", type=int, required=True
+# )
+# @lightbulb.command("purge", "Purge messages.", aliases=["clear"])
+# @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
+# async def purge_messages(ctx: lightbulb.Context) -> None:
+#     num_msgs = ctx.options.messages
+#     channel = ctx.channel_id
 
-    msgs = await ctx.bot.rest.fetch_messages(channel).limit(num_msgs)
-    await ctx.bot.rest.delete_messages(channel, msgs)
+#     # If the command was invoked using the PrefixCommand, it will create a message
+#     # before we purge the messages, so you want to delete this message first
+#     if isinstance(ctx, lightbulb.PrefixContext):
+#         await ctx.event.message.delete()
 
-    resp = await ctx.respond(f"{len(msgs)} messages deleted")
+#     msgs = await ctx.bot.rest.fetch_messages(channel).limit(num_msgs)
+#     await ctx.bot.rest.delete_messages(channel, msgs)
 
-    await asyncio.sleep(5)
-    await resp.delete()
+#     resp = await ctx.respond(f"{len(msgs)} messages deleted")
+
+#     await asyncio.sleep(5)
+#     await resp.delete()
+
+
 def load(bot):
     bot.add_plugin(mod_plugin)
 

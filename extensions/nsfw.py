@@ -39,9 +39,10 @@ async def cmd_rule34(ctx: lightbulb.context.SlashContext) -> None:
 @lightbulb.option("query", "The query to search for.")
 @lightbulb.command("porn", "Search a video on eporner.")
 @lightbulb.implements(lightbulb.commands.SlashCommand)
-async def cmd_porn(ctx: lightbulb.context.SlashContext) -> None: 
+async def cmd_porn(ctx: lightbulb.context.SlashContext) -> None:
     async with aiohttp.request(
-        "GET","https://www.eporner.com/api/v2/video/search/",
+        "GET",
+        "https://www.eporner.com/api/v2/video/search/",
         params={"per_page": 1, "query": ctx.options.query.replace(" ", "+")},
     ) as resp:
         json = await resp.json()
@@ -50,6 +51,7 @@ async def cmd_porn(ctx: lightbulb.context.SlashContext) -> None:
             return
         video = json["videos"][0]
     await ctx.respond(video["url"])
+
 
 def load(bot):
     bot.add_plugin(nsfw_plugin)

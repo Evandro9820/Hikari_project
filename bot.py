@@ -23,7 +23,6 @@ bot = lightbulb.BotApp(
             "lightbulb": {"level": "DEBUG"},
         },
     },
-
 )
 
 bot.load_extensions_from("./extensions/", must_exist=True)
@@ -35,12 +34,24 @@ bot.load_extensions_from("./extensions/", must_exist=True)
 async def ping(ctx: lightbulb.Context) -> None:
     await ctx.respond(f"Pong! Latencia: {bot.heartbeat_latency*1000:.2f}ms")
 
+
+@bot.listen()
+async def on_ready(_: hikari.StartedEvent):
+    guilds = await bot.rest.fetch_my_guilds()
+    await bot.update_presence(
+        status=hikari.Status.ONLINE,
+        activity=hikari.Activity(
+            type=hikari.ActivityType.PLAYING, name=f"+help in {len(guilds)} servers!"
+        ),
+    )
+
+
 if __name__ == "__main__":
     if os.name != "nt":
         import uvloop
 
         uvloop.install()
 
-    bot.run(activity=hikari.Activity(name = "+help", type = hikari.ActivityType.PLAYING), 
-    asyncio_debug=True
-)
+    bot.run() 
+    # activity=hikari.Activity(name="+help", type=hikari.ActivityType.PLAYING),
+    # asyncio_debug=True,

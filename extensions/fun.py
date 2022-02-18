@@ -16,7 +16,7 @@ async def fun_group(ctx: lightbulb.Context) -> None:
 @lightbulb.command("meme", "Get a meme")
 @lightbulb.implements(lightbulb.SlashSubCommand, lightbulb.PrefixSubCommand)
 async def meme_subcommand(ctx: lightbulb.Context) -> None:
-     async with aiohttp.request(
+    async with aiohttp.request(
         "GET", "https://meme-api.herokuapp.com/gimme"
     ) as response:
         res = await response.json()
