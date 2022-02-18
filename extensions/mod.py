@@ -7,7 +7,7 @@ import lightbulb
 
 mod_plugin = lightbulb.Plugin("Mod")
 
-
+# Comando de kickar um membro do servidorS
 @mod_plugin.command()
 @lightbulb.add_checks(lightbulb.has_guild_permissions(hikari.Permissions.KICK_MEMBERS))
 @lightbulb.option("member", "O membro que será removido", hikari.Member)
@@ -42,40 +42,28 @@ async def cmd_ban(ctx: lightbulb.context.SlashContext) -> None:
         f"e foi deletado mensagens de `{delete_message_days}` dias atrás."
     )
  """
-
-@mod_plugin.command
-@lightbulb.option(
-    "messages", "The number of messages to purge.", type=int, required=True
+# Esse comando excluí as mensagens de até 14 dia atrás acima disso não funciona.
+@mod_plugin.command()
+@lightbulb.add_checks(
+    lightbulb.has_guild_permissions(hikari.Permissions.MANAGE_MESSAGES)
 )
-@lightbulb.command("purge", "Purge messages.", aliases=["clear"])
-@lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
-async def purge_messages(ctx: lightbulb.Context) -> None:
-    num_msgs = ctx.options.messages
-    channel = ctx.channel_id
+@lightbulb.option(
+    "qtd", "quantidade de mensagens que irá ser apagadas", type=int, required=True
+)
+@lightbulb.command("del_msg", "excluí as mensagens do chat")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def del_cmd(ctx: lightbulb.Context) -> None:
+    qtd_msg = ctx.options.qtd
+    canal = ctx.channel_id
 
-    # If the command was invoked using the PrefixCommand, it will create a message
-    # before we purge the messages, so you want to delete this message first
-    if isinstance(ctx, lightbulb.PrefixContext):
-        await ctx.event.message.delete()
+    msg = await ctx.bot.rest.fetch_messages(canal).limit(qtd_msg)
+    await ctx.bot.rest.delete_messages(canal, msg)
 
-    msgs = await ctx.bot.rest.fetch_messages(channel).limit(num_msgs)
-    await ctx.bot.rest.delete_messages(channel, msgs)
-
-    resp = await ctx.respond(f"{len(msgs)} messages deleted")
+    resposta = await ctx.respond(f"{len(msg)} mensagens deletadas")
 
     await asyncio.sleep(5)
-    await resp.delete()
-@mod_plugin.command()
-@lightbulb.options("qtd","quantidade de mensagens que irá ser apagadas",typ
-=int, required=True)
-@lightbulb.command("del_msg","excluí as mensagens do chat")
-@lightbulb.implements(lightbulb.Sla)
-async def del_cmd(ctx: lightbulb.Context)-> None:
-  qtd_msg=ctx.options.qtd
-  canal=ctx.channel_id
-  
-  await mod_plugin.ctx.rest.fetch_messages(canal).limit(qtd_msg)
-  await mod_plugin.ctx.rest.delete_messages(canal,)
+    await resposta.delete()
+
 
 def load(bot):
     bot.add_plugin(mod_plugin)
