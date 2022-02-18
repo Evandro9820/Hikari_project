@@ -43,31 +43,39 @@ async def cmd_ban(ctx: lightbulb.context.SlashContext) -> None:
     )
  """
 
-# Este comando está com problemas
+@mod_plugin.command
+@lightbulb.option(
+    "messages", "The number of messages to purge.", type=int, required=True
+)
+@lightbulb.command("purge", "Purge messages.", aliases=["clear"])
+@lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
+async def purge_messages(ctx: lightbulb.Context) -> None:
+    num_msgs = ctx.options.messages
+    channel = ctx.channel_id
 
-# @mod_plugin.command
-# @lightbulb.option(
-#     "messages", "The number of messages to purge.", type=int, required=True
-# )
-# @lightbulb.command("purge", "Purge messages.", aliases=["clear"])
-# @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
-# async def purge_messages(ctx: lightbulb.Context) -> None:
-#     num_msgs = ctx.options.messages
-#     channel = ctx.channel_id
+    # If the command was invoked using the PrefixCommand, it will create a message
+    # before we purge the messages, so you want to delete this message first
+    if isinstance(ctx, lightbulb.PrefixContext):
+        await ctx.event.message.delete()
 
-#     # If the command was invoked using the PrefixCommand, it will create a message
-#     # before we purge the messages, so you want to delete this message first
-#     if isinstance(ctx, lightbulb.PrefixContext):
-#         await ctx.event.message.delete()
+    msgs = await ctx.bot.rest.fetch_messages(channel).limit(num_msgs)
+    await ctx.bot.rest.delete_messages(channel, msgs)
 
-#     msgs = await ctx.bot.rest.fetch_messages(channel).limit(num_msgs)
-#     await ctx.bot.rest.delete_messages(channel, msgs)
+    resp = await ctx.respond(f"{len(msgs)} messages deleted")
 
-#     resp = await ctx.respond(f"{len(msgs)} messages deleted")
-
-#     await asyncio.sleep(5)
-#     await resp.delete()
-
+    await asyncio.sleep(5)
+    await resp.delete()
+@mod_plugin.command()
+@lightbulb.options("qtd","quantidade de mensagens que irá ser apagadas",typ
+=int, required=True)
+@lightbulb.command("del_msg","excluí as mensagens do chat")
+@lightbulb.implements(lightbulb.Sla)
+async def del_cmd(ctx: lightbulb.Context)-> None:
+  qtd_msg=ctx.options.qtd
+  canal=ctx.channel_id
+  
+  await mod_plugin.ctx.rest.fetch_messages(canal).limit(qtd_msg)
+  await mod_plugin.ctx.rest.delete_messages(canal,)
 
 def load(bot):
     bot.add_plugin(mod_plugin)
